@@ -16,9 +16,19 @@ let preachSchema=mongoose.Schema(
         topic:{
             type:String
         },
-        otherdetails:{
+        other:{
+            type:String
+        },
+        date:{
+            type:String
+        },
+        time:{
+            type:String
+        },
+        photo:{
             type:String
         }
+
         
 
     }

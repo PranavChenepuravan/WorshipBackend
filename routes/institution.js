@@ -1,6 +1,8 @@
 import express from 'express' 
 import Instruction from '../models/instruction.js'
 import Preach from '../models/preach.js'
+import { upload } from '../multer.js'
+import User from '../models/user.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -16,9 +18,11 @@ router.post('/instruction',async (req,res)=>{
     }
 })
 
-router.post('/preach',async (req,res)=>{
+router.post('/preach',upload.fields([{name:'photo'}]),async (req,res)=>{
     try{
-        console.log(req,body)
+        console.log(req.files)
+        req.body={...req.body,photo:req.files['photo'][0].filename}
+
         let newPreach=new Preach(req.body)
         console.log(newPreach, 'new Preach');
         let response=await newPreach.save()
@@ -30,4 +34,18 @@ router.post('/preach',async (req,res)=>{
 
 })
 
+router.get('/preach/:id',async (req,res)=>{
+    let id=req.params.id
+    let response=await Preach.find({institutionId:id})
+    let responseData=[];
+    for (const newresponse of response){
+        let institution=await User.findById(newresponse.institutionId);
+        responseData.push({
+            preach:newresponse,
+            institutions:institution
+        })
+    }
+    // console.log(responseData);
+    res.json(responseData);
+})
 export default router

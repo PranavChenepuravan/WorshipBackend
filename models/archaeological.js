@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import institution from './user.js'
 
 let archSchema=mongoose.Schema(
     {
@@ -54,7 +55,17 @@ let archSchema=mongoose.Schema(
         },
         heritage:{
             type:String
+        },
+        photo:{
+            type:String
+        },
+        institutionname:{
+            type:String
+        },
+        institutiontype:{
+            type:String
         }
+
 
 
     }

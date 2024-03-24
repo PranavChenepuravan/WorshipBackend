@@ -3,6 +3,7 @@ import Instruction from '../models/instruction.js'
 import Preach from '../models/preach.js'
 import { upload } from '../multer.js'
 import User from '../models/user.js'
+import Archaeological from '../models/archaeological.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -48,4 +49,21 @@ router.get('/preach/:id',async (req,res)=>{
     // console.log(responseData);
     res.json(responseData);
 })
+
+router.post('/archaeological',upload.fields([{name:'photo'}]),async (req,res)=>{
+    try{
+        console.log(req.files)
+        req.body={...req.body,photo:req.files['photo'][0].filename}
+
+        let newArchaeological=new Archaeological(req.body)
+        console.log(newArchaeological, 'new Archaeological');
+        let response=await newArchaeological.save()
+        res.json(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+
+})
+
 export default router

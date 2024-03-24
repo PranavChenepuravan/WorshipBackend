@@ -4,6 +4,7 @@ import Preach from '../models/preach.js'
 import { upload } from '../multer.js'
 import User from '../models/user.js'
 import Archaeological from '../models/archaeological.js'
+import Donation from '../models/donation.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -74,6 +75,36 @@ router.get('/archaeological/:id',async (req,res)=>{
         let institution=await User.findById(newresponse.institutionId);
         responseData.push({
             archaeological:newresponse,
+            institutions:institution
+        })
+    }
+    res.json(responseData);
+})
+
+router.post('/donation',upload.fields([{name:'photo'}]),async (req,res)=>{
+    try{
+        console.log(req.files)
+        req.body={...req.body}
+
+        let newDonation=new Donation(req.body)
+        console.log(newDonation, 'new Donation')
+        let response=await newDonation.save()
+        res.json(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+
+})
+
+router.get('/donation/:id',async (req,res)=>{
+    let id=req.params.id
+    let response=await Donation.find({institutionId:id})
+    let responseData=[];
+    for (const newresponse of response){
+        let institution=await User.findById(newresponse.institutionId);
+        responseData.push({
+            donation:newresponse,
             institutions:institution
         })
     }

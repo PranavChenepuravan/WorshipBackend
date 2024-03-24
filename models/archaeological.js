@@ -64,6 +64,15 @@ let archSchema=mongoose.Schema(
         },
         institutiontype:{
             type:String
+        },
+        antiquevalue:{
+            type:String
+        },
+        sanction:{
+            type:String
+        },
+        rating:{
+            type:String
         }
 
 

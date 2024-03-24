@@ -66,4 +66,18 @@ router.post('/archaeological',upload.fields([{name:'photo'}]),async (req,res)=>{
 
 })
 
+router.get('/archaeological/:id',async (req,res)=>{
+    let id=req.params.id
+    let response=await Archaeological.find({institutionId:id})
+    let responseData=[];
+    for (const newresponse of response){
+        let institution=await User.findById(newresponse.institutionId);
+        responseData.push({
+            archaeological:newresponse,
+            institutions:institution
+        })
+    }
+    res.json(responseData);
+})
+
 export default router

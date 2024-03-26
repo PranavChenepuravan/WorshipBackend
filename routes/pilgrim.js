@@ -3,6 +3,7 @@ import Profile from '../models/user.js'
 import User from '../models/user.js'
 import Booking from '../models/booking.js'
 import { upload } from '../multer.js'
+import Pilgrimdonation from '../models/pilgrimdonation.js'
 const router=express()
 
 router.get('/viewprofile/:id',async (req,res)=>{
@@ -61,6 +62,42 @@ router.get('/booking/:id',async (req,res)=>{
     res.json(response);
 })
 
+
+router.post('/pilgrimdonation', async (req,res)=>{
+    try{
+        console.log(req.files)
+        req.body={...req.body}
+
+        let newPilgrimdonation=new Pilgrimdonation(req.body)
+        let response=await newPilgrimdonation.save()
+        res.json(response)
+        
+    }
+    catch(e){
+        res.json(e.message)
+    }
+})
+
+
+router.get('/pilgrimdonation/:id',async (req,res)=>{
+    let id=req.params.pilgrimId
+
+    let response=await Pilgrimdonation.aggregate([
+        {
+            $lookup:{
+                from:"users",
+                foreignField:"_id",
+                localField:"institutionId",
+                as:"usersInfo"
+            }
+        },
+        {
+            $unwind: "$usersInfo"
+        },
+
+    ])
+    res.json(response);
+})
 
 
 

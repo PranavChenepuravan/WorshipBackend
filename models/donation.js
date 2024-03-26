@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import institution from './user.js'
+import pilgrim from './user.js'
 
 let donationSchema=mongoose.Schema(
     {
@@ -7,11 +8,9 @@ let donationSchema=mongoose.Schema(
             type:mongoose.Types.ObjectId,
             ref:institution
         },
-        donationid:{
-            type:String
-        },
         pilgrimid:{
-
+            type:mongoose.Types.ObjectId,  
+            ref:pilgrim
         },
         name:{
             type:String
@@ -38,6 +37,9 @@ let donationSchema=mongoose.Schema(
             type:String
         },
         time:{
+            type:String
+        },
+        transactiontype:{
             type:String
         }
 

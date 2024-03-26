@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import pilgrim from './user.js'
 import User from "./user.js";
 
-let bookingSchema=mongoose.Schema(
+let bookingSchema= new mongoose.Schema(
     {
         pilgrimId:{
             type:mongoose.Types.ObjectId,

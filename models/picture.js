@@ -1,25 +1,25 @@
 import mongoose from "mongoose";
+import User from "./user.js";
 
-let userSchema=mongoose.Schema(
+let pictureSchema=mongoose.Schema(
     {
         institutionId:{
+            type:mongoose.Types.ObjectId,
+            ref:User
+        },
+        
+        pilgrimId:{
             type:String
         },
-        userId:{
-            type:String
-        },
+      
         photo:{
             type:String
         },
-        email:{
-            type:String
-        },
-        phone:{
-            type:String
-        }
+        
+
 
     }
 )
-let Picture=mongoose.model('user',userSchema)
+let Picture=mongoose.model('pictre',pictureSchema)
 
-export default User
+export default Picture

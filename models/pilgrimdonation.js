@@ -32,6 +32,12 @@ let pilgrimdonationSchema=mongoose.Schema(
         },
         weight:{
             type:String
+        },
+        tax:{
+            type:String
+        },
+        status:{
+            type:String
         }
     }
 )

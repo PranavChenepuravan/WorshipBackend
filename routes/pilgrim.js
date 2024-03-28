@@ -5,6 +5,7 @@ import Booking from '../models/booking.js'
 import { upload } from '../multer.js'
 import Pilgrimdonation from '../models/pilgrimdonation.js'
 import Picture from '../models/Picture.js'
+import Review from '../models/review.js'
 const router=express()
 
 router.get('/viewprofile/:id',async (req,res)=>{
@@ -139,6 +140,81 @@ router.get('/viewinst',async (req,res)=>{
     res.json(response)
 })
 
+
+router.get('/reviewinst',async (req,res)=>{
+
+    let response=await User.find({userType:'institution'})
+    console.log(response);
+    res.json(response)
+})
+
+router.get('/review/:id',async (req,res)=>{
+    let id=req.params.pilgrimId
+
+    let response=await Booking.aggregate([
+        {
+            $lookup:{
+                from:"users",
+                foreignField:"_id",
+                localField:"institutionId",
+                as:"usersInfo"
+            }
+        },
+        {
+            $unwind: "$usersInfo"
+        },
+
+    ])
+    res.json(response);
+})
+
+router.post('/review', async (req,res)=>{
+    try{
+        console.log(req.files)
+        req.body={...req.body}
+
+        // let newBooking=new Booking(req.body)
+        let newReview=new Review(req.body)
+        // let response=await newBooking.save()
+        let response=await newReview.save()
+
+        // let institution=await User.findById(newresponse.institutionId);
+        let institution=await User.findById(newresponse.institutionId);
+        responsedata.push({
+            institutions:institution,
+            Review:newresponse
+        });
+        res.json(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+})
+
+router.get('/viewreviewinstitution/:id',async (req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response = await User.findById(id).select('-password');
+    console.log(response);
+    res.json(response)
+})
+router.get('/viewReviews/:id', async (req,res)=>{
+    let response=await Review.aggregate([
+        {
+            $lookup:{
+                from:"users",
+                foreignField:"_id",
+                localField:"pilgrimId",
+                as:"userInfo"
+            }
+        },
+        {
+            $unwind: "$userInfo"
+        }
+    ])
+    // console.log(response);
+    res.json(response)
+} )
 
 
 export default router

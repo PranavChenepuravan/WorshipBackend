@@ -199,21 +199,37 @@ router.get('/viewreviewinstitution/:id',async (req,res)=>{
     res.json(response)
 })
 router.get('/viewReviews/:id', async (req,res)=>{
-    let response=await Review.aggregate([
-        {
-            $lookup:{
-                from:"users",
-                foreignField:"_id",
-                localField:"pilgrimId",
-                as:"userInfo"
-            }
-        },
-        {
-            $unwind: "$userInfo"
-        }
-    ])
-    // console.log(response);
-    res.json(response)
+    let id=req.params.id
+    console.log(id);
+    let response=await Review.find({institutionId:id})
+    console.log(response,'sdff');
+    let responseData=[]
+    for(let  x of response ){
+        console.log(x,'======================');
+        let pilgrims=await User.findById(x.pilgrimId)
+        console.log(pilgrims,'.....................................');
+        responseData.push({
+            reviews:x,  
+            pilgrim:pilgrims
+        })
+    }
+    
+    // let response=await Review.aggregate([
+    //     {
+    //         $lookup:{
+    //             from:"users",
+    //             foreignField:"_id",
+    //             localField:"institutionId",
+    //             as:"usersInfo"
+    //         }
+    //     },
+    //     {
+    //         $unwind: "$usersInfo"
+    //     },
+
+    // ])
+    console.log(responseData,'asddddddddddddd');
+    res.json(responseData);
 } )
 
 

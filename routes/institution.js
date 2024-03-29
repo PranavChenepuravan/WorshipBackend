@@ -5,6 +5,8 @@ import { upload } from '../multer.js'
 import User from '../models/user.js'
 import Archaeological from '../models/archaeological.js'
 import Donation from '../models/donation.js'
+import Festival from '../models/festival.js'
+import Festevents from '../models/festevents.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -109,6 +111,51 @@ router.get('/donation/:id',async (req,res)=>{
         })
     }
     res.json(responseData);
+})
+
+
+router.post('/festival',upload.fields([{name:'photo'}]),async (req,res)=>{
+    try{
+        console.log(req.files)
+        req.body={...req.body,photo:req.files['photo'][0].filename}
+
+        let newFestival=new Festival(req.body)
+        console.log(newFestival, 'new Festival');
+        let response=await newFestival.save()
+        res.json(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+})
+
+router.get('/festival/:id', async (req,res)=>{
+    let id=req.params.id
+    let response=await Festival.find({institutionId:id})
+    let responseData=[];
+    for (const newresponse of response){
+        let institution=await User.findById(newresponse.institutionId);
+        responseData.push({
+            festival:newresponse,
+            institutions:institution
+        })
+    }
+    res.json(responseData);
+})
+
+router.post('festevents',upload.fields([{name:'photo'}]),async (req,res)=>{
+    try{
+        console.log(req.files)
+        req.body={...req.body,photo:req.files['photo'][0].filename}
+
+        let newFestevents = new Festevents(req.body)
+        console.log(newFestevents, 'new Festevents');
+        let response=await newFestevents.save()
+        res.json(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
 })
 
 export default router

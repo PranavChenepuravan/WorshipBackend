@@ -7,6 +7,7 @@ import Archaeological from '../models/archaeological.js'
 import Donation from '../models/donation.js'
 import Festival from '../models/festival.js'
 import Festevents from '../models/festevents.js'
+import Picture from '../models/Picture.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -143,7 +144,7 @@ router.get('/festival/:id', async (req,res)=>{
     res.json(responseData);
 })
 
-router.post('festevents',upload.fields([{name:'photo'}]),async (req,res)=>{
+router.post('/festevents',upload.fields([{name:'photo'}]),async (req,res)=>{
     try{
         console.log(req.files)
         req.body={...req.body,photo:req.files['photo'][0].filename}
@@ -156,6 +157,38 @@ router.post('festevents',upload.fields([{name:'photo'}]),async (req,res)=>{
     catch(e){
         res.json(e.message)
     }
+})
+
+router.get('/festevents/:id', async (req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response=await Festevents.find({festivalId:id})
+    console.log(response);
+    res.json(response)
+})
+
+router.get('viewfestforevent/:id',async (req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response=await Festival.findById(id)
+    console.log(response);
+    res.json(response)
+})
+
+router.get('/picture/:id',async (req,res)=>{
+    let id=req.params.id
+    let response=await Picture.find({institutionId:id})
+    console.log(response); 
+    let responsedata=[];
+    for (const newresponse of response){
+
+        let pilgrims=await User.findById(newresponse.pilgrimId)
+        responsedata.push({
+            photos:newresponse,
+            pilgrims:pilgrims
+        })
+}
+    res.json(responsedata)
 })
 
 export default router

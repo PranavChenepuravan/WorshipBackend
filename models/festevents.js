@@ -29,6 +29,6 @@ let festeventsSchema = mongoose.Schema(
     }
 )
 
-let Festevents=mongoose.model('festevent', festeventsSchema)
+let Festevents=mongoose.model('festevents', festeventsSchema)
 
 export default Festevents

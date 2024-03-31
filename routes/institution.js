@@ -8,6 +8,7 @@ import Donation from '../models/donation.js'
 import Festival from '../models/festival.js'
 import Festevents from '../models/festevents.js'
 import Picture from '../models/Picture.js'
+import Review from '../models/review.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -190,5 +191,26 @@ router.get('/picture/:id',async (req,res)=>{
 }
     res.json(responsedata)
 })
+
+router.get('/viewReviews/:id', async (req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response=await Review.find({institutionId:id})
+    console.log(response,'sdff');
+    let responseData=[]
+    for(let  x of response ){
+        console.log(x,'======================');
+        let pilgrims=await User.findById(x.pilgrimId)
+        console.log(pilgrims,'.....................................');
+        responseData.push({
+            reviews:x,  
+            pilgrim:pilgrims
+        })
+    }
+    
+    console.log(responseData,'asddddddddddddd');
+    res.json(responseData);
+} )
+
 
 export default router

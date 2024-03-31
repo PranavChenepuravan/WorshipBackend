@@ -214,20 +214,6 @@ router.get('/viewReviews/:id', async (req,res)=>{
         })
     }
     
-    // let response=await Review.aggregate([
-    //     {
-    //         $lookup:{
-    //             from:"users",
-    //             foreignField:"_id",
-    //             localField:"institutionId",
-    //             as:"usersInfo"
-    //         }
-    //     },
-    //     {
-    //         $unwind: "$usersInfo"
-    //     },
-
-    // ])
     console.log(responseData,'asddddddddddddd');
     res.json(responseData);
 } )

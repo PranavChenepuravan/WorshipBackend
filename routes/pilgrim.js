@@ -6,6 +6,7 @@ import { upload } from '../multer.js'
 import Pilgrimdonation from '../models/pilgrimdonation.js'
 import Picture from '../models/Picture.js'
 import Review from '../models/review.js'
+import Festival from '../models/festival.js'
 const router=express()
 
 router.get('/viewprofile/:id',async (req,res)=>{
@@ -79,6 +80,8 @@ router.post('/pilgrimdonation', async (req,res)=>{
         res.json(e.message)
     }
 })
+
+
 
 
 router.get('/pilgrimdonation/:id',async (req,res)=>{
@@ -217,6 +220,19 @@ router.get('/viewReviews/:id', async (req,res)=>{
     console.log(responseData,'asddddddddddddd');
     res.json(responseData);
 } )
+
+router.get('/festival/', async (req,res)=>{
+    let response=await Festival.find()
+    let responseData=[];
+    for (const newresponse of response){
+        let institution=await User.findById(newresponse.institutionId);
+        responseData.push({
+            festival:newresponse,
+            institutions:institution
+        })
+    }
+    res.json(responseData);
+})
 
 
 export default router

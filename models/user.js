@@ -48,6 +48,10 @@ let userSchema=mongoose.Schema(
         },
         userid:{
             type:String
+        },
+        status:{
+            type:String,
+            default:'pending'
         }
 
     }

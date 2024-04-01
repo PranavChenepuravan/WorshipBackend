@@ -9,6 +9,7 @@ import Festival from '../models/festival.js'
 import Festevents from '../models/festevents.js'
 import Picture from '../models/Picture.js'
 import Review from '../models/review.js'
+import Booking from '../models/booking.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -211,6 +212,22 @@ router.get('/viewReviews/:id', async (req,res)=>{
     console.log(responseData,'asddddddddddddd');
     res.json(responseData);
 } )
+
+router.get('/visitingBooking/:id',async(req,res)=>{
+    let id=req.params.id
+    let bookings=await Booking.find({institutionId:id})
+    let responseData=[]
+    for(let x of bookings){
+        let pilgrims=await User.findById(x.pilgrimId)
+        console.log(pilgrims);
+        responseData.push({
+            bookings:x,
+            pilgrims:pilgrims
+        })
+    }
+    res.json(responseData)
+
+})
 
 
 export default router

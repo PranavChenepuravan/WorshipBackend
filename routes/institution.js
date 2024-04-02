@@ -10,6 +10,7 @@ import Festevents from '../models/festevents.js'
 import Picture from '../models/Picture.js'
 import Review from '../models/review.js'
 import Booking from '../models/booking.js'
+import Archheritage from '../models/archheritage.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -227,6 +228,36 @@ router.get('/visitingBooking/:id',async(req,res)=>{
     }
     res.json(responseData)
 
+})
+
+
+router.post('/archheritage',upload.fields([{name:'photo'}]),async (req,res)=>{
+    try{
+        console.log(req.files)
+        req.body={...req.body,photo:req.files['photo'][0].filename}
+
+        let newArchheritage=new Archheritage(req.body)
+        console.log(newArchheritage, 'new Archheritage');
+        let response=await newArchheritage.save()
+        res.json(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+
+})
+
+router.get('/archheritage/:id',async (req,res)=>{
+    let id=req.params.id
+    let response=await Archheritage.find({institutionId:id})
+    let responseData=[];
+    for (const newresponse of response){
+        let institution=await User.findById(newresponse.institutionId);
+        responseData.push({
+            archheritage:newresponse,
+            institutions:institution
+        })
+    }
 })
 
 

@@ -7,7 +7,7 @@ router.put('/manageUser/:id',async(req,res)=>{
     let id=req.params.id
     console.log(id);
     console.log(req.body)
-    let response=await User.findByidAndUpdate(id,req.body)
+    let response=await User.findByIdAndUpdate(id,req.body)
 })
 
 router.get('/viewinstprofile/',async (req,res)=>{

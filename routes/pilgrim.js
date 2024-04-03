@@ -45,7 +45,7 @@ router.get('/bookinginst',async (req,res)=>{
     res.json(response)
 })
 
-router.get('/booking/:id',async (req,res)=>{
+router.get('/booking/:id',async (req,res)=>{    
     let id=req.params.pilgrimId
 
     let response=await Booking.aggregate([

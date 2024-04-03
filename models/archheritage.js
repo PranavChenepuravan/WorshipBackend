@@ -8,7 +8,7 @@ let archheritageSchema=mongoose.Schema(
             ref:institution
         },
         location:{
-            type:String
+            type:String,
         },
         community:{
             type:String
@@ -46,6 +46,10 @@ let archheritageSchema=mongoose.Schema(
         },
         rating:{
             type:Number
+        },
+        status:{
+            type:String,
+            default:'pending'
         }
 
 

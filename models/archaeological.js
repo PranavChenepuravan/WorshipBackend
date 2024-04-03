@@ -8,7 +8,8 @@ let archSchema=mongoose.Schema(
             ref:institution
         },
         location:{
-            type:String
+            type:mongoose.Types.ObjectId,
+            ref:institution
         },
         community:{
             type:String

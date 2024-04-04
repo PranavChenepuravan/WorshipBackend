@@ -8,8 +8,7 @@ let archSchema=mongoose.Schema(
             ref:institution
         },
         location:{
-            type:mongoose.Types.ObjectId,
-            ref:institution
+            type:String
         },
         community:{
             type:String
@@ -69,11 +68,12 @@ let archSchema=mongoose.Schema(
         antiquevalue:{
             type:String
         },
-        sanction:{
-            type:String
+        status:{
+            type:String,
+            default:'pending'
         },
         rating:{
-            type:String
+            type:Number
         }
 
 

@@ -8,10 +8,6 @@ let donationSchema=mongoose.Schema(
             type:mongoose.Types.ObjectId,
             ref:institution
         },
-        pilgrimid:{
-            type:mongoose.Types.ObjectId,  
-            ref:pilgrim
-        },
         name:{
             type:String
         },
@@ -28,7 +24,7 @@ let donationSchema=mongoose.Schema(
             type:String
         },
         amount:{
-            type:String
+            type:Number
         },
         tax:{
             type:String
@@ -40,6 +36,9 @@ let donationSchema=mongoose.Schema(
             type:String
         },
         transactiontype:{
+            type:String
+        },
+        type:{
             type:String
         }
 

@@ -19,7 +19,10 @@ let bookingSchema= new mongoose.Schema(
             type:String
         },
         amount:{
-            type:String
+            type:Number
+        },
+        tax:{
+            type:Number
         }
 
     }

@@ -22,7 +22,7 @@ let pilgrimdonationSchema=mongoose.Schema(
             type:String
         },
         amount:{
-            type:String
+            type:Number
         },
         material:{
             type:String
@@ -34,7 +34,7 @@ let pilgrimdonationSchema=mongoose.Schema(
             type:String
         },
         tax:{
-            type:String
+            type:Number
         },
         status:{
             type:String

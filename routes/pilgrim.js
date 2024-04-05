@@ -7,6 +7,7 @@ import Pilgrimdonation from '../models/pilgrimdonation.js'
 import Picture from '../models/Picture.js'
 import Review from '../models/review.js'
 import Festival from '../models/festival.js'
+import Archheritage from '../models/archheritage.js'
 const router=express()
 
 router.get('/viewprofile/:id',async (req,res)=>{
@@ -232,6 +233,12 @@ router.get('/festival/', async (req,res)=>{
         })
     }
     res.json(responseData);
+})
+
+router.get('/archheritage', async (req,res)=>{
+    let response=await Archheritage.find()
+    console.log(response);
+    res.json(response)
 })
 
 

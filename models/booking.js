@@ -23,6 +23,12 @@ let bookingSchema= new mongoose.Schema(
         },
         tax:{
             type:Number
+        },
+        incomtaxId:{
+            type:String
+        },
+        status:{
+            type:String
         }
 
     }

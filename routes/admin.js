@@ -1,5 +1,7 @@
 import express from 'express'
 import User from '../models/user.js'
+import Bookingtax from '../models/bookingtax.js'
+import Booking from '../models/booking.js'
 
 const router=express()
 
@@ -34,6 +36,48 @@ router.get('/viewarchprofile/',async (req,res)=>{
 router.get('/viewpilgprofile/',async (req,res)=>{
     console.log();
     let response=await User.find({userType:"pilgrim"})
+    console.log(response);
+    res.json(response)
+})
+
+
+router.post('/bookingtax', async (req,res)=>{
+    try{
+        console.log(req.body)
+        let newBookingtax=new Bookingtax(req.body)
+        console.log(newBookingtax, 'new Bookingtax');
+        let response=await newBookingtax.save()
+        res.json(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+})
+
+// router.get('/booking', async (req,res)=>{
+//     let response=await Booking.find()
+//     console.log(response);
+//     let responsedata=[];
+//     for (const newresponse of response){
+//         let institution=await User.findById(newresponse.institutionId);
+//         let pilgrim=await User.findById(newresponse.pilgrimId);
+//         responsedata.push({
+//             institutions:institution,
+//             Booking:newresponse,
+//             pilrims:pilgrim 
+//         });
+//     }
+
+// })
+
+router.get('/booking', async(req,res)=>{
+    let response=await Booking.find()
+    console.log(response);
+    res.json(response)
+})
+
+router.get('/bookingtax', async (req,res)=>{
+    let response=await Bookingtax.find()
     console.log(response);
     res.json(response)
 })

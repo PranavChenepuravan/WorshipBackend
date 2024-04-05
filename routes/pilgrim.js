@@ -235,11 +235,7 @@ router.get('/festival/', async (req,res)=>{
     res.json(responseData);
 })
 
-router.get('/archheritage', async (req,res)=>{
-    let response=await Archheritage.find()
-    console.log(response);
-    res.json(response)
-})
+
 
 
 export default router

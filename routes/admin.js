@@ -70,11 +70,34 @@ router.post('/bookingtax', async (req,res)=>{
 
 // })
 
-router.get('/booking', async(req,res)=>{
+router.put('/bookingtax', async (req,res)=>{
+    console.log(req.body)
     let response=await Booking.find()
-    console.log(response);
+    for (let x of response){
+        let taxAmount=(req.body.tax/100)*x.amount  
+        console.log(taxAmount);
+        let taxing=await Booking.findByIdAndUpdate(x._id,{tax:taxAmount})
+    }
+    
+})
+
+router.get('/booking', async(req,res)=>{
+    let response=await Booking.aggregate([
+        {
+            $lookup:{
+                from:"users",
+                foreignField:"_id",
+                localField:"institutionId",
+                as:"institutionInfo"
+            }
+        }
+    ])
     res.json(response)
 })
+
+
+
+
 
 router.get('/bookingtax', async (req,res)=>{
     let response=await Bookingtax.find()

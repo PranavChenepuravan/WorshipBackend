@@ -255,6 +255,23 @@ router.get('/archheritage/:id',async (req,res)=>{
     res.json(response)
 })
 
+router.get('/instruction/:id',async (req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response=await Instruction.find({institutionId:id})
+    console.log(response);
+    res.json(response)
+})
+
+router.put('/instruction/:id', async(req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    console.log(req.body)
+    let response=await Instruction.findByIdAndUpdate(id,req.body,{new:true})
+    console.log(response);
+    res.json(response)
+})
+
 
 
 

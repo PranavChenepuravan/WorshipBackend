@@ -21,12 +21,12 @@ router.get('/booking/:location',async (req,res)=>{
 
 router.put('/booking/:id',async (req,res)=>{
     console.log(req.body)
-    let response=await Booking.find()
-    for(let x of response){
-        let bookingStatus=(req.body.status)
-        console.log(bookingStatus);
-        let statusing=await Booking.findByIdAndUpdate(x._id,{status:bookingStatus})
-    }
+    // let response=await Booking.find()
+    // for(let x of response){
+        // let bookingStatus=(req.body.status)
+        // console.log(bookingStatus);
+        let statusing=await Booking.findByIdAndUpdate(req.params.id,{status:req.body.status})
+    // }
 })
 
 

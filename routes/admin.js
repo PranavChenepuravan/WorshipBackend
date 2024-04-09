@@ -74,9 +74,10 @@ router.put('/bookingtax', async (req,res)=>{
     console.log(req.body)
     let response=await Booking.find()
     for (let x of response){
+        let currentPercentage=(req.body.tax)
         let taxAmount=(req.body.tax/100)*x.amount  
         console.log(taxAmount);
-        let taxing=await Booking.findByIdAndUpdate(x._id,{tax:taxAmount})
+        let taxing=await Booking.findByIdAndUpdate(x._id,{tax:taxAmount,currentPercentage:currentPercentage})
     }
     
 })

@@ -263,7 +263,15 @@ router.get('/instruction/:id',async (req,res)=>{
     res.json(response)
 })
 
-router.put('/instruction/:id', async(req,res)=>{
+router.get('/instructionedit/:id',async (req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response=await Instruction.findById(id)
+    console.log(response);
+    res.json(response)
+})
+
+router.put('/instructionedit/:id', async(req,res)=>{
     let id=req.params.id
     console.log(id);
     console.log(req.body)
@@ -272,6 +280,20 @@ router.put('/instruction/:id', async(req,res)=>{
     res.json(response)
 })
 
+router.delete(`/instructiondelete/:id`,async(req,res)=>{
+    let id=req.params.id
+    let response=await Instruction.findByIdAndDelete(id)
+    console.log(response)
+})
+
+router.get('/booking/:id', async (req, res) => {
+    let id = req.params.id;
+    console.log(id);
+    let response = await Booking.find({ institutionId: id }); // Use variable id instead of string 'id'
+    console.log(response);
+    res.json(response);
+});
+  
 
 
 

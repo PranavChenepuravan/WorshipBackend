@@ -38,7 +38,7 @@ let donationSchema=mongoose.Schema(
         transactiontype:{
             type:String
         },
-        type:{
+        category:{
             type:String
         }
 

@@ -10,7 +10,7 @@ let bookingtaxSchema=mongoose.Schema(
         },
         booingtax:{
             type:Number
-        }
+        },
     }
 )
 

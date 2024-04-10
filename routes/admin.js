@@ -2,6 +2,7 @@ import express from 'express'
 import User from '../models/user.js'
 import Bookingtax from '../models/bookingtax.js'
 import Booking from '../models/booking.js'
+import Instbookingtax from '../models/Instbookingtax.js'
 
 const router=express()
 
@@ -98,12 +99,35 @@ router.get('/booking', async(req,res)=>{
 
 
 
-
-
 router.get('/bookingtax', async (req,res)=>{
     let response=await Bookingtax.find()
     console.log(response);
     res.json(response)
 })
+
+
+router.get('/bookingtaxinst/:id', async(req,res)=>{
+    let id=req.params.id
+    let response=await Booking.find({institutionId:id})
+    console.log(response)
+    res.json(response)
+})
+
+
+router.post('/institionsbookingtax', async (req,res)=>{
+    try{
+        console.log(req.body)
+        let newInstbookingtax=new Instbookingtax(req.body)
+        console.log(newInstbookingtax, 'new Instbookingtax');
+        let response=await newInstbookingtax.save()
+        res.json(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+
+})
+
+
 
 export default router

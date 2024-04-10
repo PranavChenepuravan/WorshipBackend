@@ -17,7 +17,7 @@ let instbookingtaxSchema=mongoose.Schema(
         balance:{
             type:Number
         },
-        sanction:{
+        status:{
             type:String
         }
     }

@@ -54,7 +54,8 @@ let userSchema=mongoose.Schema(
             default:'pending'
         },
         transaction:{
-            type:String
+            type:String,
+            default:'pending'
         }
 
     }

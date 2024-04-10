@@ -129,5 +129,13 @@ router.post('/institionsbookingtax', async (req,res)=>{
 })
 
 
+router.get('/institionsbookingtax/:id', async(req,res)=>{
+    let id=req.params.id
+    let response=await Instbookingtax.find({institutionId:id})
+    console.log(response)
+    res.json(response)
+})
+
+
 
 export default router

@@ -56,6 +56,12 @@ let userSchema=mongoose.Schema(
         transaction:{
             type:String,
             default:'pending'
+        },
+        otherauthorityname:{
+            type:String
+        },
+        otherauthorityid:{
+            type:String
         }
 
     }

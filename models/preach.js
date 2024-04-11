@@ -30,6 +30,9 @@ let preachSchema=mongoose.Schema(
         },
         photo:{
             type:String
+        },
+        days:{
+            type:Number
         }
 
         

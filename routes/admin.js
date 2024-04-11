@@ -131,6 +131,7 @@ router.post('/institionsbookingtax', async (req,res)=>{
 
 router.get('/institionsbookingtax/:id', async(req,res)=>{
     let id=req.params.id
+    console.log(id,'id passed')
     let response=await Instbookingtax.find({institutionId:id})
     console.log(response)
     res.json(response)

@@ -137,6 +137,16 @@ router.get('/institionsbookingtax/:id', async(req,res)=>{
     res.json(response)
 })
 
+router.put('/institutionsbookingtax/:id', async(req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response=await Instbookingtax.findByIdAndUpdate(id,req.body)
+    console.log(response);
+})
+
+
+
+
 
 
 export default router

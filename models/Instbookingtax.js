@@ -23,6 +23,9 @@ let instbookingtaxSchema=mongoose.Schema(
         date:{
             type:Date,
             default:Date.now()
+        },
+        payeddate:{
+            type:String
         }
     }
 )

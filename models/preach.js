@@ -19,7 +19,10 @@ let preachSchema=mongoose.Schema(
         other:{
             type:String
         },
-        date:{
+        startingdate:{
+            type:String
+        },
+        endingdate:{
             type:String
         },
         time:{

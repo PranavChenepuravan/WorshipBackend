@@ -11,6 +11,7 @@ import Picture from '../models/Picture.js'
 import Review from '../models/review.js'
 import Booking from '../models/booking.js'
 import Archheritage from '../models/archheritage.js'
+import Instbookingtax from '../models/Instbookingtax.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -293,6 +294,18 @@ router.get('/booking/:id', async (req, res) => {
     console.log(response);
     res.json(response);
 });
+
+router.put('/institionsbookingtax/:id',async(req,res)=>{
+    let id=req.params.id
+    console.log(id,']]]]]]]]]]]]]]]]');
+    console.log(req.body)
+    let response=await Instbookingtax.findByIdAndUpdate(id,req.body)
+    console.log(response);
+    res.json(response)
+})
+
+
+router
   
 
 

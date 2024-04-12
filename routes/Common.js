@@ -3,10 +3,17 @@ import User from '../models/user.js'
 import { upload } from '../multer.js'
 const router=express()
 
-router.post('/register',upload.fields([{name:'photo'}]), async (req,res)=>{
+router.post('/register',upload.fields([{name:'photo'},{name:'idproof'}]), async (req,res)=>{
     try{
         console.log(req.files);
-        req.body={...req.body,photo:req.files['photo'][0].filename}
+        if(req.files['photo'][0].filename){
+
+            req.body={...req.body,photo:req.files['photo'][0].filename}
+        }
+        if(req.files['idproof'][0].filename){
+
+            req.body={...req.body,idproof:req.files['idproof'][0].filename}
+        }
         console.log(req.body)
         let newUser=new User(req.body)
         console.log(newUser, 'new user');
@@ -25,6 +32,9 @@ router.post('/login',async (req,res)=>{
     console.log(user);
     res.json(user)
 })
+
+
+
 
 
 

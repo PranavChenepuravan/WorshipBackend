@@ -117,7 +117,7 @@ router.get('/bookingtaxinst/:id', async(req,res)=>{
 router.post('/institionsbookingtax', async (req,res)=>{
     try{
         console.log(req.body)
-        let newInstbookingtax=new Instbookingtax(req.body)
+        let newInstbookingtax=new Instbookingtax({...req.body,balance:req.body.totaltax})
         console.log(newInstbookingtax, 'new Instbookingtax');
         let response=await newInstbookingtax.save()
         res.json(response)
@@ -137,12 +137,38 @@ router.get('/institionsbookingtax/:id', async(req,res)=>{
     res.json(response)
 })
 
-router.put('/institutionsbookingtax/:id', async(req,res)=>{
-    let id=req.params.id
-    console.log(id);
-    let response=await Instbookingtax.findByIdAndUpdate(id,req.body)
-    console.log(response);
-})
+// router.put('/institutionsbookingtax/:id', async(req,res)=>{
+//     let id=req.params.id
+//     console.log(id);
+//     let response=await Instbookingtax.findByIdAndUpdate(id,req.body)
+//     console.log(response);
+// })
+
+
+router.put('/institutionsbookingtax/:id', async (req, res) => {
+    const id = req.params.id;
+    console.log(id,'saddasddsadsdasdasdasd');
+
+    try {
+        const bookingTax = await Instbookingtax.findById(id);
+        if (!bookingTax) {
+            return res.status(404).json({ message: "Booking tax not found" });
+        }
+console.log(req.body);
+        const { totaltax, payed } = req.body;
+        // payed=parseFloat(payed)
+        let data=await Instbookingtax.findById(id)
+        const balance = data.balance - payed;
+        console.log(balance,'dssd');
+        
+        const updatedBookingTax = await Instbookingtax.findByIdAndUpdate(id, { ...req.body, balance }, { new: true });
+
+        return res.status(200).json(updatedBookingTax);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 
 

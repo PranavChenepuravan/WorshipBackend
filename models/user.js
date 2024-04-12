@@ -46,7 +46,7 @@ let userSchema=mongoose.Schema(
         photo:{
             type:String
         },
-        userid:{
+        idproof:{
             type:String
         },
         status:{

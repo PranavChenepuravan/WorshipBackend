@@ -82,6 +82,13 @@ router.put('/updatetbookingtotal/:id', async (req, res) => {
     }
 });
 
+router.put('/insttotalbookingstatus/:id', async (req, res)=>{
+    const id = req.params.id
+    console.log(id);
+    console.log(req.body)
+    let response=await Instbookingtax.findByIdAndUpdate(id,req.body)
+    console.log(response);
+})
 
 
 

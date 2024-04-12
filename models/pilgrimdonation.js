@@ -38,6 +38,9 @@ let pilgrimdonationSchema=mongoose.Schema(
         },
         status:{
             type:String
+        },
+        worth:{
+            type:Number
         }
     }
 )

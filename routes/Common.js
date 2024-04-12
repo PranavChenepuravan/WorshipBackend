@@ -34,6 +34,14 @@ router.post('/login',async (req,res)=>{
 })
 
 
+router.post('api/auth/authenticate',async(req,res)=>{
+    console.log(req.body);
+    let response=await User.findOne(req.body)
+    console.log(response);
+    res.json(response)
+})
+
+
 
 
 

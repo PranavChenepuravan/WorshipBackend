@@ -12,6 +12,7 @@ import Review from '../models/review.js'
 import Booking from '../models/booking.js'
 import Archheritage from '../models/archheritage.js'
 import Instbookingtax from '../models/Instbookingtax.js'
+import Pilgrimdonation from '../models/pilgrimdonation.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -305,7 +306,16 @@ router.put('/institionsbookingtax/:id',async(req,res)=>{
 })
 
 
-router
+
+router.get('/pilgdonation/:id', async (req, res) => {
+    let id = req.params.id;
+    console.log(id);
+    let response = await Pilgrimdonation.find({ institutionId: id });
+    console.log(response,'response1');
+    res.json(response); // Corrected from response.json() to res.json()
+});
+
+
   
 
 

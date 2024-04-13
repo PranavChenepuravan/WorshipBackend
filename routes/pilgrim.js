@@ -67,6 +67,20 @@ router.get('/booking/:id',async (req,res)=>{
 })
 
 
+router.get('/booking2/:id', async (req,res)=>{
+    let id = req.params.id;
+    console.log(id);
+    let response = await Booking.find({pilgrimId:id})
+    console.log(response,'response2')
+    res.json(response);
+})
+
+
+
+
+
+
+
 router.post('/pilgrimdonation', async (req,res)=>{
     try{
         console.log(req.files)
@@ -102,6 +116,15 @@ router.get('/pilgrimdonation/:id',async (req,res)=>{
         },
 
     ])
+    res.json(response);
+})
+
+
+router.get('/pilgrimdonation2/:id', async (req,res)=>{
+    let id = req.params.id;
+    console.log(id);
+    let response = await Pilgrimdonation.find({pilgrimId:id})
+    console.log(response,'response2')
     res.json(response);
 })
 

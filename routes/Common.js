@@ -1,6 +1,7 @@
 import express from 'express'
 import User from '../models/user.js'
 import { upload } from '../multer.js'
+import Propertiesinst from '../models/propertiesinst.js'
 const router=express()
 
 router.post('/register',upload.fields([{name:'photo'},{name:'idproof'}]), async (req,res)=>{
@@ -37,6 +38,13 @@ router.post('/login',async (req,res)=>{
 router.post('api/auth/authenticate',async(req,res)=>{
     console.log(req.body);
     let response=await User.findOne(req.body)
+    console.log(response);
+    res.json(response)
+})
+
+router.post('/properties', async(req,res)=>{
+    console.log(req.body);
+    let response=await Propertiesinst.findOne(req.body)
     console.log(response);
     res.json(response)
 })

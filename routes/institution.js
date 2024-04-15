@@ -13,6 +13,7 @@ import Booking from '../models/booking.js'
 import Archheritage from '../models/archheritage.js'
 import Instbookingtax from '../models/Instbookingtax.js'
 import Pilgrimdonation from '../models/pilgrimdonation.js'
+import Propertiesinst from '../models/propertiesinst.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -316,7 +317,28 @@ router.get('/pilgdonation/:id', async (req, res) => {
 });
 
 
+router.post('/propertieinst',async (req,res)=>{
+    try{
+        console.log(req.body)
+        let newPropertiesinst = new Propertiesinst(req.body)
+        console.log(newPropertiesinst, 'new Propertiesinst');
+        let response=await newPropertiesinst.save()
+        res.json(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+})
 
+router.get('/propertieinst/:id', async (req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response=await Propertiesinst.find({institutionId:id})
+    console.log(response);
+    res.json(response)
+})
+
+router.post('/who')
 
   
 

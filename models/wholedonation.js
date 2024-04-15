@@ -7,10 +7,6 @@ let wholedonationSchema=mongoose.Schema(
             type:mongoose.Types.ObjectId,
             ref:User
         },
-        pilgrimId:{
-            type:mongoose.Types.ObjectId,
-            ref:pilgrim
-        },
         cash:{
             type:Number
         },
@@ -22,3 +18,7 @@ let wholedonationSchema=mongoose.Schema(
         }
     }
 )
+
+let Wholedonation=mongoose.mongoose.model('instruction', wholedonationSchema)
+
+export default Wholedonation

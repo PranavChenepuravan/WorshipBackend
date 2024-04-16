@@ -4,28 +4,62 @@ import { upload } from '../multer.js'
 import Propertiesinst from '../models/propertiesinst.js'
 const router=express()
 
-router.post('/register',upload.fields([{name:'photo'},{name:'idproof'}]), async (req,res)=>{
-    try{
+// router.post('/register',upload.fields([{name:'photo'},{name:'idproof'}]), async (req,res)=>{
+//     try{
+//         console.log(req.files);
+//         if(req.files['photo'][0].filename){
+
+//             req.body={...req.body,photo:req.files['photo'][0].filename}
+//         }
+//         if(req.files['idproof'][0].filename){
+
+//             req.body={...req.body,idproof:req.files['idproof'][0].filename}
+//         }
+//         console.log(req.body)
+//         let newUser=new User(req.body)
+//         console.log(newUser, 'new user');
+//         let response=await newUser.save()
+//         res.json(response)
+
+//     }
+//     catch(e){
+//         res.json(e.message)
+//     }
+// })
+
+router.post('/register', upload.fields([{ name: 'photo' }, { name: 'idproof' }]), async (req, res) => {
+    try {
         console.log(req.files);
-        if(req.files['photo'][0].filename){
-
-            req.body={...req.body,photo:req.files['photo'][0].filename}
+        
+        // Handling single photo upload
+        if (req.files['photo']) {
+            if (Array.isArray(req.files['photo'])) {
+                req.body = { ...req.body, photo: req.files['photo'][0].filename };
+            } else {
+                req.body = { ...req.body, photo: req.files['photo'].filename };
+            }
         }
-        if(req.files['idproof'][0].filename){
-
-            req.body={...req.body,idproof:req.files['idproof'][0].filename}
+        
+        // Handling single idproof upload
+        if (req.files['idproof']) {
+            if (Array.isArray(req.files['idproof'])) {
+                req.body = { ...req.body, idproof: req.files['idproof'][0].filename };
+            } else {
+                req.body = { ...req.body, idproof: req.files['idproof'].filename };
+            }
         }
-        console.log(req.body)
-        let newUser=new User(req.body)
+        
+        console.log(req.body);
+        
+        let newUser = new User(req.body);
         console.log(newUser, 'new user');
-        let response=await newUser.save()
-        res.json(response)
+        let response = await newUser.save();
+        res.json(response);
+    } catch (e) {
+        res.json(e.message);
+    }
+});
 
-    }
-    catch(e){
-        res.json(e.message)
-    }
-})
 
 router.post('/login',async (req,res)=>{
     console.log(req.body);

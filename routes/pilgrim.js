@@ -8,6 +8,7 @@ import Picture from '../models/Picture.js'
 import Review from '../models/review.js'
 import Festival from '../models/festival.js'
 import Archheritage from '../models/archheritage.js'
+import mongoose from 'mongoose'
 const router=express()
 
 router.get('/viewprofile/:id',async (req,res)=>{
@@ -50,6 +51,9 @@ router.get('/booking/:id',async (req,res)=>{
     let id=req.params.pilgrimId
 
     let response=await Booking.aggregate([
+        {
+            $match: { "pilgrimId": id } // Match donations with the specified pilgrim ID
+        },
         {
             $lookup:{
                 from:"users",
@@ -99,23 +103,25 @@ router.post('/pilgrimdonation', async (req,res)=>{
 
 
 
-router.get('/pilgrimdonation/:id',async (req,res)=>{
-    let id=req.params.pilgrimId
+router.get('/pilgrimdonation/:id', async (req, res) => {
+    let id = new mongoose.Types.ObjectId(req.params.id); // Change to req.params.id to get the pilgrim ID correctly
 
-    let response=await Pilgrimdonation.aggregate([
+    let response = await Pilgrimdonation.aggregate([
         {
-            $lookup:{
-                from:"users",
-                foreignField:"_id",
-                localField:"institutionId",
-                as:"usersInfo"
+            $match: { "pilgrimId": id } // Match donations with the specified pilgrim ID
+        },
+        {
+            $lookup: {
+                from: "users",
+                foreignField: "_id",
+                localField: "institutionId",
+                as: "usersInfo"
             }
         },
         {
             $unwind: "$usersInfo"
-        },
-
-    ])
+        }
+    ]);
     res.json(response);
 })
 
@@ -145,7 +151,7 @@ router.post('/picture',upload.fields([{name:'photo'}]), async (req,res)=>{
 })
 
 router.get('/picture/',async (req,res)=>{
-    let response=await Picture.find()
+    let response=await Picture.find({status:'approved'})
     console.log(response); 
     let responsedata=[];
     for (const newresponse of response){
@@ -257,9 +263,6 @@ router.get('/festival/', async (req,res)=>{
     }
     res.json(responseData);
 })
-
-
-
 
 
 

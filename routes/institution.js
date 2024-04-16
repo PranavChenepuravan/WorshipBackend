@@ -1,4 +1,4 @@
-import express from 'express' 
+import express, { Router } from 'express' 
 import Instruction from '../models/instruction.js'
 import Preach from '../models/preach.js'
 import { upload } from '../multer.js'
@@ -14,6 +14,7 @@ import Archheritage from '../models/archheritage.js'
 import Instbookingtax from '../models/Instbookingtax.js'
 import Pilgrimdonation from '../models/pilgrimdonation.js'
 import Propertiesinst from '../models/propertiesinst.js'
+import Wholedonation from '../models/wholedonation.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -338,9 +339,33 @@ router.get('/propertieinst/:id', async (req,res)=>{
     res.json(response)
 })
 
-router.post('/who')
+// router.post('/who')
 
-  
+router.put('/picture/:id', async (req,res)=>{
+    let id=req.params.id
+    console.log(req.body,'sdasd');
+    let response=await Picture.findByIdAndUpdate(id,req.body)
+    console.log(response);
+    res.json(response)
+})
+
+router.post('/wholedonation', async (req, res) => {
+    console.log(req.body);
+
+    try {
+        console.log(req.files)
+       let  {id}=req.body
+        req.body={...req.body,instittutionId:id}
+        console.log(req.body)
+        
+        let newWholodonation = new Wholedonation(req.body)
+        let response=await newWholodonation.save()
+        res.json(response)
+    } catch (e) {
+        res.json(e.message)
+    }
+})
+
 
 
 

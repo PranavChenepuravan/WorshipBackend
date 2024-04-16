@@ -3,6 +3,7 @@ import User from '../models/user.js'
 import Bookingtax from '../models/bookingtax.js'
 import Booking from '../models/booking.js'
 import Instbookingtax from '../models/Instbookingtax.js'
+import Wholedonation from '../models/wholedonation.js'
 
 const router=express()
 
@@ -171,6 +172,36 @@ console.log(req.body);
 });
 
 
+router.get('/viewinstprofile/:location', async (req, res) => {
+    try {
+        const location = req.params.location;
+        let response = await User.find({ userType: "institution", location: location });
+        console.log(response);
+        res.json(response);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+router.get('/wholedonation', async(req,res)=>{
+    let response=await Wholedonation.find()
+    for (let x of response){
+        User.find({institutionId:x.instittutionId})
+    }
+    console.log(response)
+    res.json(response)
+
+})
+
+
+router.get('/viewdonationpilg/:id', async (req,res)=>{
+    let id=req.params.id
+    let response=await User.find({institutionId:id})
+    console.log(response)
+    res.json(response)
+})
 
 
 

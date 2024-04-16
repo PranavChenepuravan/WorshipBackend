@@ -15,6 +15,10 @@ let pictureSchema=mongoose.Schema(
         photo:{
             type:String
         },
+        status:{
+            type:String,
+            default:'rejected'
+        }
         
 
 

@@ -58,6 +58,7 @@ router.get('/viewinstprofile/:id', async (req, res) => {
     }
 });
 
+
 router.put('/updatetbookingtotal/:id', async (req, res) => {
     try {
         console.log(req.body);

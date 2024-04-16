@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from "./user";
+import User from "./user.js";
 
 let wholedonationSchema=mongoose.Schema(
     {
@@ -7,18 +7,21 @@ let wholedonationSchema=mongoose.Schema(
             type:mongoose.Types.ObjectId,
             ref:User
         },
-        cash:{
+        totalSum:{
             type:Number
         },
         date:{
-            type:String
+            type:Date,
         },
-        time:{
-            type:String
-        }
+        totaltax:{
+            type:Number
+        },
+        balance:{
+            type:Number
+        }   
     }
 )
 
-let Wholedonation=mongoose.mongoose.model('instruction', wholedonationSchema)
+let Wholedonation=mongoose.mongoose.model('wholedonation', wholedonationSchema)
 
 export default Wholedonation

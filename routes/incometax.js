@@ -2,6 +2,7 @@ import express from 'express'
 import Booking from '../models/booking.js';
 import User from '../models/user.js';
 import Instbookingtax from '../models/Instbookingtax.js';
+import Wholedonation from '../models/wholedonation.js';
 
 const router=express()
 
@@ -89,6 +90,21 @@ router.put('/insttotalbookingstatus/:id', async (req, res)=>{
     console.log(req.body)
     let response=await Instbookingtax.findByIdAndUpdate(id,req.body)
     console.log(response);
+})
+
+router.get('donation/:location',async (req,res)=>{
+    let location=req.params.location
+    console.log(location)
+    let response=await User.findById({location:location,userType:'institution'})
+    let response1Data=[];
+    for(let x of response){
+        let donation=await Wholedonation.find({instittutionId:x._id})
+        response1Data.push({
+            institution:x,
+            donations:donation
+        })
+    }
+    res.json(response1Data);
 })
 
 

@@ -71,13 +71,63 @@ router.get('/booking/:id',async (req,res)=>{
 })
 
 
-router.get('/booking2/:id', async (req,res)=>{
-    let id = req.params.id;
-    console.log(id);
-    let response = await Booking.find({pilgrimId:id})
-    console.log(response,'response2')
-    res.json(response);
-})
+// router.get('/booking2/:id', async (req,res)=>{
+//     let id = req.params.id;
+//     console.log(id);
+//     let response = await Booking.find({pilgrimId:id})
+//     console.log(response,'response2')
+//     res.json(response);
+// })
+
+// router.get('/booking2/:id', async(req,res)=>{
+//     let id = req.params.id
+//     let response = await Booking.findById({pilgrimId:id})
+//     let response1Data=[];
+//     for(let x of response){
+//         let institution=await User.find({_id:x._id})
+//         response1Data.push({
+//             booking:x,
+//             institutions:institution
+//         })
+//     }
+//     res.json(response1Data);
+
+// })
+
+
+router.get('/booking2/:id', async (req, res) => {
+    try {
+        let id = req.params.id;
+        
+        // Find bookings associated with the pilgrim ID
+        let bookings = await Booking.find({ pilgrimId: id });
+        
+        // If no bookings found, return empty array
+        if (!bookings || bookings.length === 0) {
+            return res.status(404).json({ error: "No bookings found for the given pilgrim ID" });
+        }
+
+        let responseData = [];
+
+        // Loop through each booking and find the corresponding user information
+        for (let booking of bookings) {
+            let institution = await User.findById(booking.institutionId);
+            if (institution) {
+                responseData.push({
+                    booking: booking,
+                    institutions: institution
+                });
+            } else {
+                console.log("User not found for booking ID:", booking.pilgrimId);
+            }
+        }
+
+        res.json(responseData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 
 

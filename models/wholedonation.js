@@ -13,12 +13,18 @@ let wholedonationSchema=mongoose.Schema(
         date:{
             type:Date,
         },
-        totaltax:{
+        tax:{
             type:Number
         },
         balance:{
             type:Number
-        }   
+        },
+        currentPercentage:{
+            type:Number
+        },
+        payeddate:{
+            type:String
+        }
     }
 )
 

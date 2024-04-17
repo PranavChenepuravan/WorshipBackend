@@ -366,6 +366,50 @@ router.post('/wholedonation', async (req, res) => {
     }
 })
 
+// router.get('/wholedonation/:id', async(req,res)=>{
+//     let id=req.params.id
+//     console.log(id,'responseid')
+//     let response=await Wholedonation.findById({instittutionId:id})
+//     let responseData=[]
+//     for (let x of response){
+//         let instInfo=await User.findById(x.instittutionId)
+//        responseData.push({
+//         donations:x,
+//         instInfo:instInfo
+//        })
+//     }
+//     console.log(responseData,'whole')
+//     res.json(responseData)
+// })
+
+router.get('/wholedonation/:id', async (req, res) => {
+    try {
+        let id = req.params.id;
+        console.log(id, 'responseid');
+
+        // Find donations based on institutionId
+        let response = await Wholedonation.find({ instittutionId: id });
+
+        let responseData = [];
+
+        // Iterate through each donation
+        for (let donation of response) {
+            // Find institution information for each donation
+            let instInfo = await User.findById(donation.instittutionId);
+            responseData.push({
+                donation: donation,
+                instInfo: instInfo
+            });
+        }
+
+        console.log(responseData, 'whole');
+        res.json(responseData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 
 

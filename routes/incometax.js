@@ -130,12 +130,13 @@ router.get('/wholedonation/:id', async(req,res)=>{
 })
 
 
-router.put('wholedonationstatus/:id', async (req,res)=>{
+router.put('/wholedonationstatus/:id', async (req,res)=>{
     const id = req.params.id
     console.log(id);
     console.log(req.body)
     let response=await Wholedonation.findByIdAndUpdate(id,req.body)
     console.log(response)
+    res.json(console)
 })
 
 

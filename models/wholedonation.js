@@ -24,6 +24,9 @@ let wholedonationSchema=mongoose.Schema(
         },
         payeddate:{
             type:String
+        },
+        status:{
+            type:String
         }
     }
 )

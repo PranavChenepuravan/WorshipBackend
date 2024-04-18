@@ -92,20 +92,52 @@ router.put('/insttotalbookingstatus/:id', async (req, res)=>{
     console.log(response);
 })
 
-router.get('donation/:location',async (req,res)=>{
-    let location=req.params.location
-    console.log(location)
-    let response=await User.findById({location:location,userType:'institution'})
-    let response1Data=[];
-    for(let x of response){
-        let donation=await Wholedonation.find({instittutionId:x._id})
-        response1Data.push({
-            institution:x,
-            donations:donation
+
+router.get('/donation/:location', async (req, res) => {
+    try {
+        const location = req.params.location;
+        console.log(location);
+
+        const institutions = await User.find({ location: location, userType: 'institution' });
+console.log(institutions,'][][][][][][');
+let responseData=[]
+for(let x of institutions){
+    let wholedon=await Wholedonation.find({instittutionId:x._id})
+    console.log(wholedon,'================================');
+    for(let wd of wholedon){
+
+        let inst=await User.findById(wd.instittutionId)
+        responseData.push({
+            wholedon:wd,
+            inst:inst
+            
         })
     }
-    res.json(response1Data);
+}
+        res.json(responseData   )
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+router.get('/wholedonation/:id', async(req,res)=>{
+    let id=req.params.id
+    let response=await Wholedonation.find({instittutionId:id})
+    console.log(response)
+    res.json(response)
 })
+
+
+router.put('wholedonationstatus/:id', async (req,res)=>{
+    const id = req.params.id
+    console.log(id);
+    console.log(req.body)
+    let response=await Wholedonation.findByIdAndUpdate(id,req.body)
+    console.log(response)
+})
+
 
 
 

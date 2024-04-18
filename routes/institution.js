@@ -350,7 +350,7 @@ router.put('/picture/:id', async (req,res)=>{
 })
 
 router.post('/wholedonation', async (req, res) => {
-    console.log(req.body);
+    console.log(req.body,'-----------------------------------------');
 
     try {
         console.log(req.files)

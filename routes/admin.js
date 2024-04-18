@@ -296,6 +296,15 @@ console.log(req.body);
 });
 
 
+router.get('/institutionsdonationtax/:id', async(req,res)=>{
+    let id=req.params.id
+    console.log(id, 'id pass')
+    let response=await Wholedonation.find({instittutionId:id})
+    console.log(response)
+    res.json(response)
+})
+
+
 
 
 export default router

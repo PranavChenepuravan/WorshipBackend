@@ -48,7 +48,18 @@ router.post('/register', upload.fields([{ name: 'photo' }, { name: 'idproof' }])
                 req.body = { ...req.body, idproof: req.files['idproof'].filename };
             }
         }
-        
+
+
+
+        const existMail = await User.findOne({ email: req.body.email });
+        if (existMail) {
+            return res.status(400).json({ message: 'Mail exists' });
+        }
+        const existphonenumber = await User.findOne({ phone: req.body.phone });
+        if (existphonenumber) {
+            return res.status(400).json({ message: 'phone number exists' });
+        }
+     
         console.log(req.body);
         
         let newUser = new User(req.body);
@@ -70,7 +81,7 @@ router.post('/login',async (req,res)=>{
 })
 
 
-router.post('api/auth/authenticate',async(req,res)=>{
+router.post('/authenticate',async(req,res)=>{
     console.log(req.body);
     let response=await User.findOne(req.body)
     console.log(response);

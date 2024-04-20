@@ -62,6 +62,9 @@ let userSchema=mongoose.Schema(
         },
         otherauthorityid:{
             type:String
+        },
+        visitamount:{
+            type:Number
         }
 
     }

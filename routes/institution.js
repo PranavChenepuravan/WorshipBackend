@@ -317,6 +317,15 @@ router.get('/pilgdonation/:id', async (req, res) => {
     res.json(response); // Corrected from response.json() to res.json()
 });
 
+router.put('/pilgdonation/:id',async(req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    console.log(req.body)
+    let response3=await Pilgrimdonation.findByIdAndUpdate(id,req.body)
+    console.log(response3)
+    res.json(response3)
+})
+
 
 router.post('/propertieinst',async (req,res)=>{
     try{

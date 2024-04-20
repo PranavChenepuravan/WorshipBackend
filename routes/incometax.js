@@ -13,10 +13,14 @@ router.get('/booking/:location',async (req,res)=>{
     let response1Data=[];
     for(let x of response){
         let booking=await Booking.find({institutionId:x._id})
-        response1Data.push({
-            institution:x,
-            bookings:booking  
-        })
+        for(let b of booking){
+
+            let inst=await User.findById(b.institutionId)
+            response1Data.push({
+                institution:inst,
+                bookings:b  
+            })
+        }
     }
     res.json(response1Data);
 })

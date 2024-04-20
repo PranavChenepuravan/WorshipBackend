@@ -175,7 +175,19 @@ console.log(req.body);
 router.get('/viewinstprofile/:location', async (req, res) => {
     try {
         const location = req.params.location;
-        let response = await User.find({ userType: "institution", location: location });
+        let response = await User.find({ userType: "institution", location: location,transaction:'pending' });
+        console.log(response);
+        res.json(response);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.get('/viewinstprofile2/:location', async (req, res) => {
+    try {
+        const location = req.params.location;
+        let response = await User.find({ userType: "institution", location: location, transaction:'approved'});
         console.log(response);
         res.json(response);
     } catch (error) {

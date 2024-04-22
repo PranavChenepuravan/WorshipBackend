@@ -15,6 +15,7 @@ import Instbookingtax from '../models/Instbookingtax.js'
 import Pilgrimdonation from '../models/pilgrimdonation.js'
 import Propertiesinst from '../models/propertiesinst.js'
 import Wholedonation from '../models/wholedonation.js'
+import Dailyincome from '../models/dailyincome.js'
 const router=express()
 
 router.post('/instruction',async (req,res)=>{
@@ -298,6 +299,22 @@ router.get('/booking/:id', async (req, res) => {
     res.json(response);
 });
 
+router.get('/booking2/:id', async (req, res) => {
+    let id=req.params.id
+    let bookings=await Booking.find({institutionId:id})
+    let responseData=[]
+    for(let x of bookings){
+        let pilgrims=await User.findById(x.pilgrimId)
+        console.log(pilgrims);
+        responseData.push({
+            bookings:x,
+            pilgrims:pilgrims
+        })
+    }
+    res.json(responseData)
+});
+
+
 router.put('/institionsbookingtax/:id',async(req,res)=>{
     let id=req.params.id
     console.log(id,']]]]]]]]]]]]]]]]');
@@ -419,6 +436,20 @@ router.get('/wholedonation/:id', async (req, res) => {
     }
 });
 
+
+router.post('/dailyincome',async (req,res)=>{
+    try{
+        console.log(req.body)
+        let newDailyincome = new Dailyincome(req.body)
+        console.log(newDailyincome, 'new Dailyincome');
+        let response=await newDailyincome.save()
+        res.json(response)
+    }
+    catch(e)
+    {
+        res.json(e.message)
+    }
+})
 
 
 

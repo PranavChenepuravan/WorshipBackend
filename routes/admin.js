@@ -110,7 +110,7 @@ router.get('/bookingtax', async (req,res)=>{
 router.get('/bookingtaxinst/:id', async(req,res)=>{
     let id=req.params.id
     let response=await Booking.find({institutionId:id})
-    console.log(response)
+    console.log(response,'==============')
     res.json(response)
 })
 

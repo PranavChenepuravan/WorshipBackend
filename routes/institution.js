@@ -451,6 +451,13 @@ router.post('/dailyincome',async (req,res)=>{
     }
 })
 
+router.get('/dailyincome/:id',async (req,res)=>{
+        let id=req.params.id
+        console.log(id);
+        let response=await Dailyincome.find({institutionId:id})
+        console.log(response);
+        res.json(response)
+})
 
 
 export default router

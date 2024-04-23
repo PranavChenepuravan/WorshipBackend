@@ -3,7 +3,7 @@ import institution from './user.js'
 
 let dailyincomeSchema=mongoose.Schema(
     {
-        institionId:{
+        institutionId:{
             type:mongoose.Types.ObjectId,
             ref:institution
         },

@@ -50,9 +50,16 @@ router.get('/viewincomeprofile/',async (req,res)=>{
     res.json(response)
 })
 
-router.get('/viewarchprofile/',async (req,res)=>{
+router.get('/viewnewarchprofile/',async (req,res)=>{
     console.log();
-    let response=await User.find({userType:"archaeology"})
+    let response=await User.find({userType:"archaeology",status:"pending"})
+    console.log(response);
+    res.json(response)
+})
+
+router.get('/viewexistingarchprofile/',async (req,res)=>{
+    console.log();
+    let response=await User.find({userType:"archaeology",status: { $ne: "pending" }})
     console.log(response);
     res.json(response)
 })

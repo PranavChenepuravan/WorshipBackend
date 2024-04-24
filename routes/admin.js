@@ -16,10 +16,32 @@ router.put('/manageUser/:id',async(req,res)=>{
 
 router.get('/viewinstprofile/',async (req,res)=>{
     console.log();
-    let response=await User.find({userType:"institution"})
+    let response=await User.find({userType:"institution",        $or: [
+        { status: "approved" },
+        { status: "blocked" }
+    ]})
     console.log(response);
     res.json(response)
 })
+
+router.get('/viewnewinstprofile/',async (req,res)=>{
+    console.log();
+    let response=await User.find({userType:"institution",status:"pending"})
+    console.log(response);
+    res.json(response)
+})
+
+
+
+
+
+router.get('/viewnewincomeprofile/',async (req,res)=>{
+    console.log();
+    let response=await User.find({userType:"incometax"})
+    console.log(response);
+    res.json(response)
+})
+
 
 router.get('/viewincomeprofile/',async (req,res)=>{
     console.log();

@@ -65,7 +65,15 @@ let userSchema=mongoose.Schema(
         },
         visitamount:{
             type:Number
+        },
+        gender:{
+            type:String
+
+        },
+        caretaker:{
+            type:String
         }
+
 
     }
     

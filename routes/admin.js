@@ -37,15 +37,15 @@ router.get('/viewnewinstprofile/',async (req,res)=>{
 
 router.get('/viewnewincomeprofile/',async (req,res)=>{
     console.log();
-    let response=await User.find({userType:"incometax"})
+    let response=await User.find({userType:"incometax",status:"pending"})
     console.log(response);
     res.json(response)
 })
 
 
-router.get('/viewincomeprofile/',async (req,res)=>{
+router.get('/viewexistingincomeprofile/',async (req,res)=>{
     console.log();
-    let response=await User.find({userType:"incometax"})
+    let response=await User.find({userType:"incometax",status:{ $ne: "pending" }})
     console.log(response);
     res.json(response)
 })

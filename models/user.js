@@ -72,6 +72,9 @@ let userSchema=mongoose.Schema(
         },
         caretaker:{
             type:String
+        }, 
+        cpassword:{
+            type:String
         }
 
 

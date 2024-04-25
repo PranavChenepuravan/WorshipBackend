@@ -10,6 +10,18 @@ let dailyincomeSchema=mongoose.Schema(
         date:{
             type:String
         },
+        income:{
+            type:Number
+
+        },
+        expense:{
+            type:Number
+
+        },
+        salary:{
+            type:Number
+
+        },
         amount:{
             type:Number
         }

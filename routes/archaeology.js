@@ -22,21 +22,13 @@ router.post('/archemployee',upload.single('photo'),async (req,res)=>{
     }
 })
 
+
 router.get('/archheritage/:id',async (req,res)=>{
     let id=req.params.id
     console.log(id);
     let response=await User.findById(id)
     console.log(response.location);
     let heritage=await Archheritage.find({location:response.location})
-    res.json(heritage)
-})
-
-router.get('/archheritagenew/:id',async (req,res)=>{
-    let id=req.params.id
-    console.log(id);
-    let response=await User.findById(id)
-    console.log(response.location);
-    let heritage=await Archheritage.find({location:response.location,status:{ $ne: "pending" }})
     res.json(heritage)
 })
 

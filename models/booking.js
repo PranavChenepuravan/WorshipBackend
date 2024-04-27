@@ -13,7 +13,7 @@ let bookingSchema= new mongoose.Schema(
             ref:User
         },
         date:{
-            type:String
+            type:Date
         },
         time:{
             type:String

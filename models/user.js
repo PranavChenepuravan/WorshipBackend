@@ -75,6 +75,9 @@ let userSchema=mongoose.Schema(
         }, 
         cpassword:{
             type:String
+        },
+        block:{
+            type:String
         }
 
 

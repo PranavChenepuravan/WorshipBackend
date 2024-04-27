@@ -12,6 +12,8 @@ router.put('/manageUser/:id',async(req,res)=>{
     console.log(id);
     console.log(req.body)
     let response=await User.findByIdAndUpdate(id,req.body)
+    console.log(response)
+    res.json(response)
 })
 
 router.get('/viewinstprofile/',async (req,res)=>{
@@ -101,31 +103,75 @@ router.post('/bookingtax', async (req,res)=>{
 
 // })
 
-router.put('/bookingtax', async (req,res)=>{
-    console.log(req.body)
-    let response=await Booking.find()
-    for (let x of response){
-        let currentPercentage=(req.body.tax)
-        let taxAmount=(req.body.tax/100)*x.amount  
-        console.log(taxAmount);
-        let taxing=await Booking.findByIdAndUpdate(x._id,{tax:taxAmount,currentPercentage:currentPercentage})
-    }
-    
-})
+router.put('/bookingtax', async (req, res) => {
+    try {
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth() + 1;
 
-router.get('/booking', async(req,res)=>{
-    let response=await Booking.aggregate([
-        {
-            $lookup:{
-                from:"users",
-                foreignField:"_id",
-                localField:"institutionId",
-                as:"institutionInfo"
+        // Find bookings where the month of the 'date' field matches the current month
+        let bookingsToUpdate = await Booking.find({
+            $expr: {
+                $eq: [{ $month: "$date" }, currentMonth]
             }
+        });
+
+        for (let booking of bookingsToUpdate) {
+            let taxAmount = (req.body.tax / 100) * booking.amount;
+
+            // Update the booking with the calculated tax amount and current percentage
+            await Booking.findByIdAndUpdate(booking._id, {
+                tax: taxAmount,
+                currentPercentage: req.body.tax
+            });
         }
-    ])
-    res.json(response)
-})
+
+        res.json({ message: "Booking tax updated successfully" });
+    } catch (error) {
+        console.error("Error updating booking tax:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+
+router.get('/booking', async (req, res) => {
+    try {
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth() + 1;
+
+        // Find bookings where the month of the 'date' field matches the current month
+        let response = await Booking.aggregate([
+            {
+                $addFields: {
+                    // Convert the 'date' field from string to Date type
+                    date: {
+                        $toDate: "$date"
+                    }
+                }
+            },
+            {
+                $match: {
+                    $expr: {
+                        $eq: [{ $month: "$date" }, currentMonth]
+                    }
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    foreignField: "_id",
+                    localField: "institutionId",
+                    as: "institutionInfo"
+                }
+            }
+        ]);
+
+        res.json(response);
+    } catch (error) {
+        console.error("Error fetching booking data:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 
 
 
@@ -138,7 +184,12 @@ router.get('/bookingtax', async (req,res)=>{
 
 router.get('/bookingtaxinst/:id', async(req,res)=>{
     let id=req.params.id
-    let response=await Booking.find({institutionId:id})
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth() + 1;
+    console.log(id,'==============');
+    let response=await Booking.find({institutionId:id,$expr: {
+        $eq: [{ $month: "$date" }, currentMonth]
+    }})
     console.log(response,'==============')
     res.json(response)
 })

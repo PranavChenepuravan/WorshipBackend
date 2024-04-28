@@ -312,6 +312,51 @@ router.get('/wholedonation', async(req,res)=>{
     res.json(responseData)
 })
 
+router.get('/wholedonation2', async(req,res)=>{
+    try{
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth() + 1;
+
+        let response = await Wholedonation.aggregate([
+            {
+                $addFields: {
+                    date: {
+                        $toDate: "$date"
+                    }
+                }
+            },
+            {
+                $match: {
+                    $expr: {
+                        $eq: [{ $month: "$date"}, currentMonth]
+                    }
+                }
+            },
+            {
+                $match: {
+                    $expr: {
+                        $eq: [{ $month: "$date"}, currentMonth]
+                    }
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    foreignField:"_id",
+                    localField: "instittutionId",
+                    as: "instInfo"
+                }
+            }
+        ]);
+        res.json(response);
+    }
+    catch(error)
+    {
+        console.error("Error fetching booking data:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 // router.put('/wholedonationtax', async (req,res)=>{
 //     console.log(req.body)
 //     let response=await Wholedonation.find()

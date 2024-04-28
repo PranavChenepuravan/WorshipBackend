@@ -11,7 +11,7 @@ let wholedonationSchema=mongoose.Schema(
             type:Number
         },
         date:{
-            type:Date,
+            type:Date
         },
         tax:{
             type:Number

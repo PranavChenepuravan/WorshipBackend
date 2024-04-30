@@ -47,7 +47,7 @@ router.get('/viewnewincomeprofile/',async (req,res)=>{
 
 router.get('/viewexistingincomeprofile/',async (req,res)=>{
     console.log();
-    let response=await User.find({userType:"incometax",status:{ $ne: "approved" }})
+    let response=await User.find({userType:"incometax",status:{ $ne: "pending" }})
     console.log(response);
     res.json(response)
 })

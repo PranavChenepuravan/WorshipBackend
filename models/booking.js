@@ -33,6 +33,9 @@ let bookingSchema= new mongoose.Schema(
         },
         currentPercentage:{
             type:Number
+        },
+        bookeddate:{
+            type:Date
         }
 
     }

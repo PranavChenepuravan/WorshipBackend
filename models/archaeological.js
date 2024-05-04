@@ -20,8 +20,7 @@ let archSchema=mongoose.Schema(
             type:String
         },
         email:{
-            type:String,
-            unique:true
+            type:String
         },
         date:{
             type:String

@@ -209,13 +209,31 @@ router.post('/institionsbookingtax', async (req,res)=>{
 
 })
 
-
 router.get('/institionsbookingtax/:id', async(req,res)=>{
     let id=req.params.id
     console.log(id,'id passed')
     let response=await Instbookingtax.find({institutionId:id})
     console.log(response)
     res.json(response)
+})
+
+router.get('/institionsbookingtax/:id', async(req,res)=>{
+    let id=req.params.id
+    console.log(id,'id passed')
+    let response=await Instbookingtax.find({institutionId:id})
+    console.log(response)
+    let responnse2=[]
+    for(let x of response){
+        console.log(x,'=================');
+        let Institution=await User.findById(x.institutionId)
+        console.log(Institution);
+        responnse2.push({
+            bookings:x,
+            inst:Institution
+
+        })
+    }
+    res.json(responnse2)
 })
 
 // router.put('/institutionsbookingtax/:id', async(req,res)=>{

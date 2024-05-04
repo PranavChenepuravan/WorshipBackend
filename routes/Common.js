@@ -76,6 +76,9 @@ router.post('/login',async (req,res)=>{
     console.log(req.body);
     const{email,password}=req.body
     let user=await User.findOne({email:email,password:password})
+    if(!user){
+        return res.status(402).json('invalid username or password')
+    }
     console.log(user);
     res.json(user)
 })
@@ -95,6 +98,33 @@ router.post('/properties', async(req,res)=>{
     res.json(response)
 })
 
+router.delete(`/user/:id`, async(req,res)=>{
+    let id=req.params.id
+    let response=await User.findByIdAndDelete(id)
+    console.log(response)
+    res.json(response)
+})
+
+// router.delete('/terminate', async (req,res)=>{
+//     try{
+//         console.log(req.files)
+//         req.baseUrl={...req.body}
+
+//         let newUser=new User(req.body)
+//         let response=await newUser.save()
+//         res.json(response)
+//         }
+//         catch(e){
+//             res.json(e.message)
+//         }
+// })
+
+router.put('/terminate/:id',async (req,res)=>{
+    let id=req.params.id
+    let response=await User.findByIdAndUpdate(id,{status:'terminated'})
+    console.log(response);
+    res.json(response)
+})
 
 
 

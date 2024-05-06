@@ -330,9 +330,47 @@ router.get('/pilgdonation/:id', async (req, res) => {
     let id = req.params.id;
     console.log(id);
     let response = await Pilgrimdonation.find({ institutionId: id });
+
     console.log(response,'response1');
     res.json(response); // Corrected from response.json() to res.json()
 });
+
+router.get('/pilgdonation2/:id', async (req, res) => {
+    let id = req.params.id;
+    console.log(id);
+    let response = await Pilgrimdonation.aggregate([
+        {
+            $lookup: {
+                from: "users",
+                foreignField: "_id",
+                localField: "pilgrimId",
+                as: "pilgInfo"
+            }
+        }
+    ]);
+    console.log(response);
+    res.json(response);
+});
+
+router.get('/pilgdonation3/:id',async (req,res)=>{
+    let id=req.params.id
+    console.log(id,'id passed')
+    let response=await Pilgrimdonation.find({institutionId:id})
+    console.log(response,'=-=-=-=-=-=-=-=-=-=-=-')
+    let response2=[]
+    for(let x of response){
+        console.log(x,'-----------------');
+        let Pilgrim=await User.findById(x.pilgrimId)
+        console.log(Pilgrim,'---000--------------000---')
+        response2.push({
+            donInfo:x,
+            pilgInfo:Pilgrim
+        })
+    }
+    res.json(response2)
+
+})
+
 
 router.put('/pilgdonation/:id',async(req,res)=>{
     let id=req.params.id

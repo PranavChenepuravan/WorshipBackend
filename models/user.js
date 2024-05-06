@@ -32,7 +32,8 @@ let userSchema=mongoose.Schema(
             type:String
         },
         phone:{
-            type:String
+            type:String,
+            unique:true
         },
         other:{
             type:String

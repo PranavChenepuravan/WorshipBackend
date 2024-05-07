@@ -27,6 +27,18 @@ let wholedonationSchema=mongoose.Schema(
         },
         status:{
             type:String
+        },
+        bankName:{
+            type:String
+        },
+        accountNo:{
+            type:String
+        },
+        ifsc:{
+            type:String
+        },
+        username:{
+            type:String
         }
     }
 )

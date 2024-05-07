@@ -26,6 +26,18 @@ let instbookingtaxSchema=mongoose.Schema(
         },
         payeddate:{
             type:String
+        },
+        bankName:{
+            type:String
+        },
+        accountNo:{
+            type:String
+        },
+        ifscNo:{
+            type:String
+        },
+        userName:{
+            type:String
         }
     }
 )

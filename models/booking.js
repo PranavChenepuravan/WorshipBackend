@@ -36,6 +36,18 @@ let bookingSchema= new mongoose.Schema(
         },
         bookeddate:{
             type:Date
+        },
+        bankName:{
+            type:String
+        },
+        accountNo:{
+            type:String
+        },
+        ifscNo:{
+            type:String
+        },
+        userName:{
+            type:String
         }
 
     }

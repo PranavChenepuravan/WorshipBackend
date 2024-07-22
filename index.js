@@ -2,7 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 const app=express()
 import cors from 'cors'
-mongoose.connect('mongodb://127.0.0.1:27017/WroshipStraightPath')
+// mongoose.connect('mongodb://127.0.0.1:27017/WroshipStraightPath')
+mongoose.connect('mongodb+srv://pranavparathakkad:snSGLrCCeBJQQOgL@cluster0.tz0jh3o.mongodb.net/worshipservicetracker')
 .then(() => console.log('connected !'));
 
 import pilgrimRouter from './routes/pilgrim.js'

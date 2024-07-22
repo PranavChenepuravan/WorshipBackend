@@ -255,7 +255,7 @@ router.post('/archheritage',upload.fields([{name:'photo'}]),async (req,res)=>{
 router.get('/archheritage/:id',async (req,res)=>{
     let id=req.params.id
     console.log(id);
-    let response=await Archheritage.find({institutionId:id})
+    let response=await Archheritage.find({institutionId:id,status:'approved'})
     console.log(response);
     res.json(response)
 })
